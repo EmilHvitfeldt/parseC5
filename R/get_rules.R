@@ -1,3 +1,14 @@
+parse_model <- function(x) {
+  tree_raw <- x$tree %>%
+    str_split("\n") %>%
+    pluck(1)
+
+  tree <- tree_raw[seq(3, length(tree_raw) - 1)]
+  tree <- str_subset(tree, "freq=")
+
+  parse_tree(tree)
+}
+
 parse_tree <- function(tree) {
   trees <- list()
 
