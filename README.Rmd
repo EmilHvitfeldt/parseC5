@@ -1,0 +1,54 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
+
+# parseC5
+
+<!-- badges: start -->
+<!-- badges: end -->
+
+The goal of parseC5 is to parse rules from fitted C5.0 models
+
+## Installation
+
+You can install the development version of parseC5 like so:
+
+``` r
+remotes::install_github("emilhvitfeldt/parseC5")
+```
+
+## Example
+
+```{r}
+library(parseC5)
+library(dplyr)
+library(C50)
+
+data(ames, package = "modeldata")
+
+ad_mod <- C5.0(Street ~ ., data = ames, trials = 10)
+
+res <- parse_model(ad_mod)
+
+res
+
+res |>
+  filter(tree == "1") |>
+  pull(rule)
+
+res |>
+  filter(tree == "1") |>
+  pull(freqs)
+```
+
