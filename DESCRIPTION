@@ -16,3 +16,5 @@ Imports:
     rlang,
     stringr,
     utils
+URL: https://github.com/EmilHvitfeldt/parseC5
+BugReports: https://github.com/EmilHvitfeldt/parseC5/issues
