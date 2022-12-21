@@ -47,7 +47,6 @@ parse_elts <- function(x) {
 
 ad_mod <- C5.0(Class ~ tau + Genotype, data = ad_data)
 cat(ad_mod$tree)
-debugonce(summary)
 summary(ad_mod)
 
 # ------------------------------------------------------------------------------
