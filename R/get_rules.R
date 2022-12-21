@@ -1,10 +1,9 @@
-parse_tree <- function(x) {
-  indexes <- get_rule_index(1, x)
+parse_tree <- function(tree) {
+  rules <- get_rule_index(1, tree)
 
   tibble(
-    tree = 1,
-    node = seq_along(indexes),
-    rule = map(indexes, parse_rule)
+    node = seq_along(rules),
+    rule = map(rules, parse_rule)
   )
 }
 
