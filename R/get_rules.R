@@ -40,3 +40,11 @@ get_rule_index <- function(index, tree, history = c()) {
 
   res
 }
+
+parse_rule <- function(x) {
+  x <- names(x)
+  x <- x[-1]
+  x <- paste(x, collapse = " & ")
+  x <- rlang::parse_expr(x)
+  x
+}
