@@ -1,10 +1,23 @@
 parse_tree <- function(tree) {
-  rules <- get_rule_index(1, tree)
+  trees <- list()
 
-  tibble(
-    node = seq_along(rules),
-    rule = map(rules, parse_rule)
-  )
+  index <- 1
+  repeat {
+    rules <- get_rule_index(index, tree)
+
+    tree_tbl <- tibble(
+      node = seq_along(rules),
+      rule = map(rules, parse_rule),
+      freqs = map(rules, get_freqs, tree = tree)
+    )
+
+    trees <- c(trees, list(tree_tbl))
+
+    if (max(unlist(rules)) == length(tree)) break
+    index <- max(unlist(rules)) + 1
+  }
+
+  purrr::map_dfr(trees, identity, .id = "tree")
 }
 
 get_rule_index <- function(index, tree, history = c()) {
@@ -56,4 +69,14 @@ parse_rule <- function(x) {
   x <- paste(x, collapse = " & ")
   x <- rlang::parse_expr(x)
   x
+}
+
+get_freqs <- function(rule, tree) {
+  last <- tail(rule, 1)
+
+  freqs <- str_remove(tree[last], ".*freq=")
+  freqs <- str_extract_all(freqs, "[0-9]+")[[1]]
+  freqs <- as.integer(freqs)
+
+  freqs
 }
